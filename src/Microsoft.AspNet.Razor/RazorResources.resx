@@ -404,10 +404,10 @@ Instead, wrap the contents of the block in "{{}}":
     <value>Section blocks ("{0}") cannot be nested.  Only one level of section blocks are allowed.</value>
   </data>
   <data name="TagHelpers_AttributesMustHaveAName" xml:space="preserve">
-    <value>Tag Helper attributes must have a name.</value>
+    <value>Tag Helper '{0}'s attributes must have names.</value>
   </data>
   <data name="TagHelpers_CannotHaveCSharpInTagDeclaration" xml:space="preserve">
-    <value>Tag Helpers cannot have C# in an HTML tag element's attribute declaration area.</value>
+    <value>The tag helper '{0}' must not have C# in the element's attribute declaration area.</value>
   </data>
   <data name="TagHelpers_TagHelperCodeGeneartorMustBeAssociatedWithATagHelperBlock" xml:space="preserve">
     <value>A TagHelperCodeGenerator must only be used with TagHelperBlocks.</value>
@@ -423,5 +423,11 @@ Instead, wrap the contents of the block in "{{}}":
   </data>
   <data name="TagHelpersParseTreeRewriter_FoundMalformedTagHelper" xml:space="preserve">
     <value>Found a malformed '{0}' tag helper. Tag helpers must have a start and end tag or be self closing.</value>
+  </data>
+  <data name="TagHelpersParseTreeRewriter_MissingValueFromTagHelper" xml:space="preserve">
+    <value>Missing '{0}' from '{1}' tag helper.</value>
+  </data>
+  <data name="TagHelpersParseTreeRewriter_MissingCloseAngle" xml:space="preserve">
+    <value>Missing close angle for tag helper '{0}'.</value>
   </data>
 </root>
