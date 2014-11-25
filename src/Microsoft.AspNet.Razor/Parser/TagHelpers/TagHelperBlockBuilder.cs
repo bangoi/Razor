@@ -166,6 +166,8 @@ namespace Microsoft.AspNet.Razor.Parser.TagHelpers
                 Kind = span.Kind
             };
             var htmlSymbols = span.Symbols.OfType<HtmlSymbol>().ToArray();
+            var capturedAttributeValueStart = false;
+            var attributeValueStartLocation = span.Start;
             var symbolOffset = 1;
             string name = null;
 
@@ -181,6 +183,16 @@ namespace Microsoft.AspNet.Razor.Parser.TagHelpers
                 }
                 else if (afterEquals)
                 {
+                    // When symbols are accepted into SpanBuilders their locations get altered to abide by the 
+                    // parent which is why we need to mark our start location prior to adding the symbol so we know
+                    // the location of the attribute value start within the document.
+                    if (!capturedAttributeValueStart)
+                    {
+                        capturedAttributeValueStart = true;
+
+                        attributeValueStartLocation += symbol.Start;
+                    }
+
                     builder.Accept(symbol);
                 }
                 else if (symbol.Type == HtmlSymbolType.Equals)
@@ -208,6 +220,10 @@ namespace Microsoft.AspNet.Razor.Parser.TagHelpers
                     afterEquals = true;
                 }
             }
+
+            // After all symbols have been added we need to offset the builders start position. Adding symbols to a
+            // SpanBuilder alters its position prior to it being occupied.
+            builder.Start = attributeValueStartLocation;
 
             return CreateMarkupAttribute(name, builder, attributeValueTypes);
         }

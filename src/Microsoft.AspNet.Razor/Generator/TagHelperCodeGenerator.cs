@@ -3,10 +3,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNet.Razor.Generator.Compiler;
 using Microsoft.AspNet.Razor.Parser.SyntaxTree;
 using Microsoft.AspNet.Razor.Parser.TagHelpers;
 using Microsoft.AspNet.Razor.TagHelpers;
+using Microsoft.AspNet.Razor.Text;
 
 namespace Microsoft.AspNet.Razor.Generator
 {
@@ -63,7 +65,8 @@ namespace Microsoft.AspNet.Razor.Generator
 
                 attributes[attribute.Key] = new ChunkBlock
                 {
-                    Children = chunks
+                    Children = chunks,
+                    Start = chunks.FirstOrDefault()?.Start ?? SourceLocation.Zero
                 };
 
                 // Reset the code tree builder so we can build a new one for the next attribute
