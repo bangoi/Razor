@@ -9,17 +9,17 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
     public class TagHelperOutputTest
     {
         [Fact]
-        public void TagName_CannotSetToNullInCtor()
+        public void TagName_CanSetToNullInCtor()
         {
             // Arrange & Act
             var tagHelperOutput = new TagHelperOutput(null);
 
             // Assert
-            Assert.Empty(tagHelperOutput.TagName);
+            Assert.Null(tagHelperOutput.TagName);
         }
 
         [Fact]
-        public void TagName_CannotSetToNull()
+        public void TagName_CanSetToNull()
         {
             // Arrange
             var tagHelperOutput = new TagHelperOutput("p");
@@ -28,11 +28,11 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             tagHelperOutput.TagName = null;
 
             // Assert
-            Assert.Empty(tagHelperOutput.TagName);
+            Assert.Null(tagHelperOutput.TagName);
         }
 
         [Fact]
-        public void Content_CannotSetToNull()
+        public void Content_CanSetToNull()
         {
             // Arrange
             var tagHelperOutput = new TagHelperOutput("p");
@@ -41,7 +41,7 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             tagHelperOutput.Content = null;
 
             // Assert
-            Assert.Empty(tagHelperOutput.Content);
+            Assert.Null(tagHelperOutput.Content);
         }
 
         [Fact]
