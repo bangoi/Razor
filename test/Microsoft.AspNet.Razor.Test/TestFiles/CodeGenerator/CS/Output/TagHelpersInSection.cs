@@ -38,7 +38,48 @@ namespace TestOutput
                 Instrumentation.BeginContext(87, 21, true);
                 WriteLiteralTo(__razor_template_writer, "\r\n    <div>\r\n        ");
                 Instrumentation.EndContext();
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("mytaghelper", "test");
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("mytaghelper", "test", async() => {
+                    Instrumentation.BeginContext(211, 52, true);
+                    WriteLiteralTo(__razor_template_writer, "\r\n            In None ContentBehavior.\r\n            ");
+                    Instrumentation.EndContext();
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", async() => {
+                        Instrumentation.BeginContext(280, 26, true);
+                        WriteLiteralTo(__razor_template_writer, "Some buffered values with ");
+                        Instrumentation.EndContext();
+                        Instrumentation.BeginContext(307, 4, false);
+#line 11 "TagHelpersInSection.cshtml"
+      WriteTo(__razor_template_writer, code);
+
+#line default
+#line hidden
+                        Instrumentation.EndContext();
+                    }
+                    , StartWritingScope, EndWritingScope);
+                    __NestedTagHelper = CreateTagHelper<NestedTagHelper>();
+                    __tagHelperExecutionContext.Add(__NestedTagHelper);
+                    __tagHelperExecutionContext.Output = __tagHelperRunner.RunAsync(__tagHelperExecutionContext).Result;
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateStartTag());
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePreContent());
+                    if (__tagHelperExecutionContext.Output.ContentSet)
+                    {
+                        WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateContent());
+                    }
+                    else if (__tagHelperExecutionContext.ChildContentRetrieved)
+                    {
+                        WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GetChildContentAsync().Result);
+                    }
+                    else
+                    {
+                        __tagHelperExecutionContext.ExecuteChildContentAsync().Result;
+                    }
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePostContent());
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateEndTag());
+                    __tagHelperExecutionContext = __tagHelperScopeManager.End();
+                    Instrumentation.BeginContext(329, 10, true);
+                    WriteLiteralTo(__razor_template_writer, "\r\n        ");
+                    Instrumentation.EndContext();
+                }
+                , StartWritingScope, EndWritingScope);
                 __MyTagHelper = CreateTagHelper<MyTagHelper>();
                 __tagHelperExecutionContext.Add(__MyTagHelper);
                 StartWritingScope();
@@ -62,28 +103,20 @@ Write(DateTime.Now);
                 __tagHelperExecutionContext.AddHtmlAttribute("unboundproperty", __tagHelperStringValueBuffer.ToString());
                 __tagHelperExecutionContext.Output = __tagHelperRunner.RunAsync(__tagHelperExecutionContext).Result;
                 WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateStartTag());
-                Instrumentation.BeginContext(211, 52, true);
-                WriteLiteralTo(__razor_template_writer, "\r\n            In None ContentBehavior.\r\n            ");
-                Instrumentation.EndContext();
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", "test");
-                __NestedTagHelper = CreateTagHelper<NestedTagHelper>();
-                __tagHelperExecutionContext.Add(__NestedTagHelper);
-                StartWritingScope();
-                WriteLiteral("Some buffered values with ");
-#line 11 "TagHelpersInSection.cshtml"
-                                 Write(code);
-
-#line default
-#line hidden
-                __tagHelperStringValueBuffer = EndWritingScope();
-                __tagHelperExecutionContext.Output = __tagHelperRunner.RunAsync(__tagHelperExecutionContext, __tagHelperStringValueBuffer).Result;
-                WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateStartTag());
-                WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateContent());
-                WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateEndTag());
-                __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                Instrumentation.BeginContext(329, 10, true);
-                WriteLiteralTo(__razor_template_writer, "\r\n        ");
-                Instrumentation.EndContext();
+                WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePreContent());
+                if (__tagHelperExecutionContext.Output.ContentSet)
+                {
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateContent());
+                }
+                else if (__tagHelperExecutionContext.ChildContentRetrieved)
+                {
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GetChildContentAsync().Result);
+                }
+                else
+                {
+                    __tagHelperExecutionContext.ExecuteChildContentAsync().Result;
+                }
+                WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateEndTag());
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 Instrumentation.BeginContext(353, 14, true);
