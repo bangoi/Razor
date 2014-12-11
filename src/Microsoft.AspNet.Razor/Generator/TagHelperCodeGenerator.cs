@@ -62,11 +62,12 @@ namespace Microsoft.AspNet.Razor.Generator
                 attribute.Value.Accept(codeGenerator);
 
                 var chunks = codeGenerator.Context.CodeTreeBuilder.CodeTree.Chunks;
+                var first = chunks.FirstOrDefault();
 
                 attributes[attribute.Key] = new ChunkBlock
                 {
                     Children = chunks,
-                    Start = chunks.FirstOrDefault()?.Start ?? SourceLocation.Zero
+                    Start = first == null ? SourceLocation.Zero : first.Start
                 };
 
                 // Reset the code tree builder so we can build a new one for the next attribute

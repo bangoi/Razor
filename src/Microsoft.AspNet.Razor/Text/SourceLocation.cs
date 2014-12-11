@@ -14,6 +14,7 @@ namespace Microsoft.AspNet.Razor.Text
     {
         public static readonly SourceLocation Undefined = CreateUndefined();
         public static readonly SourceLocation Zero = new SourceLocation(0, 0, 0);
+        public static readonly SourceLocation One = new SourceLocation(1, 0, 1);
 
         private int _absoluteIndex;
         private int _lineIndex;

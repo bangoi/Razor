@@ -430,7 +430,6 @@ namespace Microsoft.AspNet.Razor.Generator.Compiler.CSharp
                 attributeDescriptor,
                 valueRenderer: (writer) =>
                 {
-                    // We only want to do the work of generating a line mapping if we're in design time mode.
                     if (_context.Host.DesignTimeMode)
                     {
                         using (new CSharpLineMappingWriter(_writer, documentLocation, value.Length))

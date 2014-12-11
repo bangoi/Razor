@@ -177,23 +177,24 @@ namespace Microsoft.AspNet.Razor.Parser.TagHelpers
             {
                 var symbol = htmlSymbols[i];
 
-                if (name == null && symbol.Type == HtmlSymbolType.Text)
+                if (afterEquals)
                 {
-                    name = symbol.Content;
-                }
-                else if (afterEquals)
-                {
-                    // When symbols are accepted into SpanBuilders their locations get altered to abide by the 
+                    // When symbols are accepted into SpanBuilders their locations get altered to be offset by the 
                     // parent which is why we need to mark our start location prior to adding the symbol so we know
                     // the location of the attribute value start within the document.
                     if (!capturedAttributeValueStart)
                     {
                         capturedAttributeValueStart = true;
 
-                        attributeValueStartLocation += symbol.Start;
+                        attributeValueStartLocation = span.Start + symbol.Start;
                     }
 
                     builder.Accept(symbol);
+                }
+                else if (name == null && symbol.Type == HtmlSymbolType.Text)
+                {
+                    name = symbol.Content;
+                    attributeValueStartLocation = SourceLocation.Advance(span.Start, name);
                 }
                 else if (symbol.Type == HtmlSymbolType.Equals)
                 {
@@ -205,24 +206,30 @@ namespace Microsoft.AspNet.Razor.Parser.TagHelpers
                     // TODO: Handle malformed tags, if there's an '=' then there MUST be a value.
                     // https://github.com/aspnet/Razor/issues/104
 
+                    SourceLocation symbolStartLocation;
+
                     // Check for attribute start values, aka single or double quote
                     if (IsQuote(htmlSymbols[i + 1]))
                     {
                         // Move past the attribute start so we can accept the true value.
                         i++;
+                        symbolStartLocation = htmlSymbols[i + 1].Start;
                     }
                     else
                     {
+                        symbolStartLocation = symbol.Start;
+
                         // Set the symbol offset to 0 so we don't attempt to skip an end quote that doesn't exist.
                         symbolOffset = 0;
                     }
 
+                    attributeValueStartLocation = symbolStartLocation + span.Start + SourceLocation.One;
                     afterEquals = true;
                 }
             }
 
-            // After all symbols have been added we need to offset the builders start position. Adding symbols to a
-            // SpanBuilder alters its position prior to it being occupied.
+            // After all symbols have been added we need to set the builders start position so we do not indirectly
+            // modify each symbols Start location.
             builder.Start = attributeValueStartLocation;
 
             return CreateMarkupAttribute(name, builder, attributeValueTypes);
