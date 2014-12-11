@@ -14,6 +14,9 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
     public class TagHelperExecutionContext
     {
         private readonly List<ITagHelper> _tagHelpers;
+        private readonly Func<Task> _executeChildContentAsync;
+        private readonly Action _startWritingScope;
+        private readonly Func<TextWriter> _endWritingScope;
         private string _childContent;
 
         /// <summary>
@@ -21,7 +24,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         /// </summary>
         internal TagHelperExecutionContext(string tagName)
             : this(tagName,
-                   executeChildContentAsync: async () => await Task.FromResult(result: true),
+                   string.Empty,
+                   executeChildContentAsync: () => Task.FromResult(result: true),
                    startWritingScope: () => { },
                    endWritingScope: () => new StringWriter())
         {
@@ -36,51 +40,21 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         /// <param name="startWritingScope">A delegate used to start a writing scope in a Razor page.</param>
         /// <param name="endWritingScope">A delegate used to end a writing scope in a Razor page.</param>
         public TagHelperExecutionContext([NotNull] string tagName,
-				         [NotNull] string uniqueId,
+                                         [NotNull] string uniqueId,
                                          [NotNull] Func<Task> executeChildContentAsync,
                                          [NotNull] Action startWritingScope,
                                          [NotNull] Func<TextWriter> endWritingScope)
         {
-            ExecuteChildContentAsync = executeChildContentAsync;
-            GetChildContentAsync = async () =>
-            {
-                if (_childContent == null)
-                {
-                    startWritingScope();
-                    await executeChildContentAsync();
-                    _childContent = endWritingScope().ToString();
-                }
+            _tagHelpers = new List<ITagHelper>();
+            _executeChildContentAsync = executeChildContentAsync;
+            _startWritingScope = startWritingScope;
+            _endWritingScope = endWritingScope;
 
-                return _childContent;
-            };
             AllAttributes = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
             HTMLAttributes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-            _tagHelpers = new List<ITagHelper>();
             TagName = tagName;
             UniqueId = uniqueId;
         }
-
-        /// <summary>
-        /// Internal for testing purposes only.
-        /// </summary>
-        internal TagHelperExecutionContext([NotNull] string tagName)
-            : this(tagName, string.Empty)
-        {
-
-        }
-
-        /// <summary>
-        /// A delegate used to execute the child content asynchronously.
-        /// </summary>
-        public Func<Task> ExecuteChildContentAsync { get; }
-
-        /// <summary>
-        /// A delegate used to execute and retrieve the rendered child content asynchronously.
-        /// </summary>
-        /// <remarks>
-        /// Child content is only executed once. Successive calls to this delegate return a cached result.
-        /// </remarks>
-        public Func<Task<string>> GetChildContentAsync { get; }
 
         /// <summary>
         /// Indicates if <see cref="GetChildContentAsync"/> has been called.
@@ -157,6 +131,34 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         public void AddTagHelperAttribute([NotNull] string name, object value)
         {
             AllAttributes.Add(name, value);
+        }
+
+        /// <summary>
+        /// Executes the child content asynchronously.
+        /// </summary>
+        /// <returns>A task that indicates when child content execution has completed.</returns>
+        public Task ExecuteChildContentAsync()
+        {
+            return _executeChildContentAsync();
+        }
+
+        /// <summary>
+        /// Execute and retrieve the rendered child content asynchronously.
+        /// </summary>
+        /// <returns>The rendered child content.</returns>
+        /// <remarks>
+        /// Child content is only executed once. Successive calls to this method return a cached result.
+        /// </remarks>
+        public async Task<string> GetChildContentAsync()
+        {
+            if (_childContent == null)
+            {
+                _startWritingScope();
+                await _executeChildContentAsync();
+                _childContent = _endWritingScope().ToString();
+            }
+
+            return _childContent;
         }
     }
 }

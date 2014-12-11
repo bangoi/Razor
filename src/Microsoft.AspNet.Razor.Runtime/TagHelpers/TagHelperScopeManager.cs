@@ -38,8 +38,11 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                                                [NotNull] Action startWritingScope,
                                                [NotNull] Func<TextWriter> endWritingScope)
         {
-            var executionContext = 
-                new TagHelperExecutionContext(tagName, uniqueId, executeChildContentAsync, startWritingScope, endWritingScope);
+            var executionContext = new TagHelperExecutionContext(tagName,
+                                                                 uniqueId,
+                                                                 executeChildContentAsync,
+                                                                 startWritingScope,
+                                                                 endWritingScope);
 
             _executionScopes.Push(executionContext);
 

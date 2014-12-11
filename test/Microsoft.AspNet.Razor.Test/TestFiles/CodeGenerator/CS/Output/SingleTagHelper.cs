@@ -44,11 +44,11 @@ namespace TestOutput
             }
             else if (__tagHelperExecutionContext.ChildContentRetrieved)
             {
-                WriteLiteral(__tagHelperExecutionContext.Output.GetChildContentAsync().Result);
+                WriteLiteral(__tagHelperExecutionContext.GetChildContentAsync().Result);
             }
             else
             {
-                __tagHelperExecutionContext.ExecuteChildContentAsync().Result;
+                __tagHelperExecutionContext.ExecuteChildContentAsync().Wait();
             }
             WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
             WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());

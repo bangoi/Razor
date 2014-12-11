@@ -12,6 +12,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
     /// </summary>
     public class TagHelperContext
     {
+        private readonly Func<Task<string>> _getChildContentAsync;
+
         /// <summary>
         /// Instantiates a new <see cref="TagHelperContext"/>.
         /// </summary>
@@ -20,12 +22,12 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         /// <param name="getChildContentAsync">A delegate used to execute and retrieve the rendered child content 
         /// asynchronously.</param>
         public TagHelperContext([NotNull] IDictionary<string, object> allAttributes,
-			        [NotNull] string uniqueId
+                                [NotNull] string uniqueId,
                                 [NotNull] Func<Task<string>> getChildContentAsync)
         {
             AllAttributes = allAttributes;
             UniqueId = uniqueId;
-            GetChildContentAsync = getChildContentAsync;
+            _getChildContentAsync = getChildContentAsync;
         }
 
         /// <summary>
@@ -37,13 +39,17 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         /// An identifier unique to the HTML element this context is for.
         /// </summary>
         public string UniqueId { get; }
-        
+
         /// <summary>
         /// A delegate used to execute and retrieve the rendered child content asynchronously.
         /// </summary>
+        /// <returns>Content rendered by children.</returns>
         /// <remarks>
         /// Child content is only executed once. Successive calls to this delegate return a cached result.
         /// </remarks>
-        public Func<Task<string>> GetChildContentAsync { get; }
+        public Task<string> GetChildContentAsync()
+        {
+            return _getChildContentAsync();
+        }
     }
 }

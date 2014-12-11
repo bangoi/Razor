@@ -40,15 +40,15 @@ namespace TestOutput
                 Instrumentation.EndContext();
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("mytaghelper", "test", async() => {
                     Instrumentation.BeginContext(211, 52, true);
-                    WriteLiteralTo(__razor_template_writer, "\r\n            In None ContentBehavior.\r\n            ");
+                    WriteLiteral("\r\n            In None ContentBehavior.\r\n            ");
                     Instrumentation.EndContext();
-                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", async() => {
+                    __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", "test", async() => {
                         Instrumentation.BeginContext(280, 26, true);
-                        WriteLiteralTo(__razor_template_writer, "Some buffered values with ");
+                        WriteLiteral("Some buffered values with ");
                         Instrumentation.EndContext();
                         Instrumentation.BeginContext(307, 4, false);
 #line 11 "TagHelpersInSection.cshtml"
-      WriteTo(__razor_template_writer, code);
+                                 Write(code);
 
 #line default
 #line hidden
@@ -58,25 +58,25 @@ namespace TestOutput
                     __NestedTagHelper = CreateTagHelper<NestedTagHelper>();
                     __tagHelperExecutionContext.Add(__NestedTagHelper);
                     __tagHelperExecutionContext.Output = __tagHelperRunner.RunAsync(__tagHelperExecutionContext).Result;
-                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateStartTag());
-                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePreContent());
+                    WriteLiteral(__tagHelperExecutionContext.Output.GenerateStartTag());
+                    WriteLiteral(__tagHelperExecutionContext.Output.GeneratePreContent());
                     if (__tagHelperExecutionContext.Output.ContentSet)
                     {
-                        WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateContent());
+                        WriteLiteral(__tagHelperExecutionContext.Output.GenerateContent());
                     }
                     else if (__tagHelperExecutionContext.ChildContentRetrieved)
                     {
-                        WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GetChildContentAsync().Result);
+                        WriteLiteral(__tagHelperExecutionContext.GetChildContentAsync().Result);
                     }
                     else
                     {
-                        __tagHelperExecutionContext.ExecuteChildContentAsync().Result;
+                        __tagHelperExecutionContext.ExecuteChildContentAsync().Wait();
                     }
-                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePostContent());
-                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateEndTag());
+                    WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
+                    WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());
                     __tagHelperExecutionContext = __tagHelperScopeManager.End();
                     Instrumentation.BeginContext(329, 10, true);
-                    WriteLiteralTo(__razor_template_writer, "\r\n        ");
+                    WriteLiteral("\r\n        ");
                     Instrumentation.EndContext();
                 }
                 , StartWritingScope, EndWritingScope);
@@ -110,11 +110,13 @@ Write(DateTime.Now);
                 }
                 else if (__tagHelperExecutionContext.ChildContentRetrieved)
                 {
-                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GetChildContentAsync().Result);
+                    WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.GetChildContentAsync().Result);
                 }
                 else
                 {
-                    __tagHelperExecutionContext.ExecuteChildContentAsync().Result;
+                    StartWritingScope(__razor_template_writer);
+                    __tagHelperExecutionContext.ExecuteChildContentAsync().Wait();
+                    EndWritingScope();
                 }
                 WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteralTo(__razor_template_writer, __tagHelperExecutionContext.Output.GenerateEndTag());

@@ -46,8 +46,6 @@ namespace Microsoft.AspNet.Razor.Test.Generator
             }
         }
 
-        }
-
         public static TheoryData TagHelperDescriptorFlowTestData
         {
             get
@@ -94,13 +92,6 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                         false
                     },
                     {
-                        "ContentBehaviorTagHelpers",
-                        "ContentBehaviorTagHelpers",
-                        ContentBehaviorTagHelperDescriptors,
-                        ContentBehaviorTagHelperDescriptors,
-                        false
-                    },
-                    {
                         "ComplexTagHelpers",
                         "ComplexTagHelpers",
                         PAndInputTagHelperDescriptors,
@@ -128,7 +119,7 @@ namespace Microsoft.AspNet.Razor.Test.Generator
             bool designTimeMode)
         {
             RunTagHelperTest(
-                testName, 
+                testName,
                 baseLineName: baselineName,
                 tagHelperDescriptors: tagHelperDescriptors,
                 onResults: (results) =>
@@ -138,6 +129,8 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                                  TagHelperDescriptorComparer.Default);
                 },
                 designTimeMode: designTimeMode);
+        }
+
         public static TheoryData DesignTimeTagHelperTestData
         {
             get
