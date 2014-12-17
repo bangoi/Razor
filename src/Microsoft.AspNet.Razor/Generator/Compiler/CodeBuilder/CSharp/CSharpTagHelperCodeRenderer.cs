@@ -116,11 +116,17 @@ namespace Microsoft.AspNet.Razor.Generator.Compiler.CSharp
             var oldWriter = _context.TargetWriterName;
             _context.TargetWriterName = null;
 
+            // Disabling instrumentation inside TagHelper bodies since we never know if it's accurate
+            var oldInstrumentation = _context.Host.EnableInstrumentation;
+            _context.Host.EnableInstrumentation = false;
+
             using (_writer.BuildAsyncLambda(endLine: false))
             {
                 // Render all of the tag helper children.
                 _bodyVisitor.Accept(children);
             }
+
+            _context.Host.EnableInstrumentation = oldInstrumentation;
 
             _context.TargetWriterName = oldWriter;
 

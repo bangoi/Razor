@@ -27,9 +27,7 @@ namespace TestOutput
             WriteLiteral("\r\n<div class=\"randomNonTagHelperAttribute\">\r\n    ");
             Instrumentation.EndContext();
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("p", "test", async() => {
-                Instrumentation.BeginContext(99, 10, true);
                 WriteLiteral("\r\n        ");
-                Instrumentation.EndContext();
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("p", "test", async() => {
                 }
                 , StartWritingScope, EndWritingScope);
@@ -53,9 +51,7 @@ namespace TestOutput
                 WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                Instrumentation.BeginContext(116, 10, true);
                 WriteLiteral("\r\n        ");
-                Instrumentation.EndContext();
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", "test", async() => {
                 }
                 , StartWritingScope, EndWritingScope);
@@ -84,9 +80,7 @@ namespace TestOutput
                 WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                Instrumentation.BeginContext(147, 10, true);
                 WriteLiteral("\r\n        ");
-                Instrumentation.EndContext();
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", "test", async() => {
                 }
                 , StartWritingScope, EndWritingScope);
@@ -117,9 +111,7 @@ namespace TestOutput
                 WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                Instrumentation.BeginContext(196, 6, true);
                 WriteLiteral("\r\n    ");
-                Instrumentation.EndContext();
             }
             , StartWritingScope, EndWritingScope);
             __PTagHelper = CreateTagHelper<PTagHelper>();

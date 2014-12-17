@@ -25,20 +25,14 @@ MyHelper(string val)
             WriteLiteralTo(__razor_helper_writer, "    <div>\r\n        ");
             Instrumentation.EndContext();
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("mytaghelper", "test", async() => {
-                Instrumentation.BeginContext(184, 52, true);
                 WriteLiteral("\r\n            In None ContentBehavior.\r\n            ");
-                Instrumentation.EndContext();
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", "test", async() => {
-                    Instrumentation.BeginContext(253, 37, true);
                     WriteLiteral("Some buffered values with a value of ");
-                    Instrumentation.EndContext();
-                    Instrumentation.BeginContext(291, 3, false);
 #line 8 "TagHelpersInHelper.cshtml"
                                             Write(val);
 
 #line default
 #line hidden
-                    Instrumentation.EndContext();
                 }
                 , StartWritingScope, EndWritingScope);
                 __NestedTagHelper = CreateTagHelper<NestedTagHelper>();
@@ -61,9 +55,7 @@ MyHelper(string val)
                 WriteLiteral(__tagHelperExecutionContext.Output.GeneratePostContent());
                 WriteLiteral(__tagHelperExecutionContext.Output.GenerateEndTag());
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
-                Instrumentation.BeginContext(312, 10, true);
                 WriteLiteral("\r\n        ");
-                Instrumentation.EndContext();
             }
             , StartWritingScope, EndWritingScope);
             __MyTagHelper = CreateTagHelper<MyTagHelper>();
@@ -142,13 +134,10 @@ Write(DateTime.Now);
             WriteLiteral("\r\n");
             Instrumentation.EndContext();
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("mytaghelper", "test", async() => {
-                Instrumentation.BeginContext(367, 9, false);
 #line 12 "TagHelpersInHelper.cshtml"
 Write(MyHelper(item => new Template((__razor_template_writer) => {
     __tagHelperExecutionContext = __tagHelperScopeManager.Begin("nestedtaghelper", "test", async() => {
-        Instrumentation.BeginContext(394, 12, true);
         WriteLiteral("Custom Value");
-        Instrumentation.EndContext();
     }
     , StartWritingScope, EndWritingScope);
     __NestedTagHelper = CreateTagHelper<NestedTagHelper>();
@@ -179,7 +168,6 @@ Write(MyHelper(item => new Template((__razor_template_writer) => {
 
 #line default
 #line hidden
-                Instrumentation.EndContext();
             }
             , StartWritingScope, EndWritingScope);
             __MyTagHelper = CreateTagHelper<MyTagHelper>();
